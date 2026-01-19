@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Odin Giphy API</title>
+  </head>
+  <body>
+    <input type="text" />
+    <button type="button">Search</button>
+    <img src="#" />
+    <script>
+      const img = document.querySelector('img');
+      const searchbar = document.querySelector('input');
+      const searchButton = document.querySelector('button');
+      searchButton.addEventListener('click', () => {
+        const searchValue = searchbar.value;
+        if (searchValue)
+          fetch(
+            `https://api.giphy.com/v1/gifs/translate?api_key=1gSQrNXOimiaONNQ71dwp47ND3bNRyo3&s=${searchValue}`,
+          )
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (response) {
+              img.src = response.data.images.original.url;
+            })
+            .catch(function (e) {
+              console.log(e);
+            });
+      });
+    </script>
+  </body>
+</html>
