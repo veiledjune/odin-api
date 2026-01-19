@@ -13,22 +13,20 @@
       const img = document.querySelector('img');
       const searchbar = document.querySelector('input');
       const searchButton = document.querySelector('button');
-      searchButton.addEventListener('click', () => {
+      searchButton.addEventListener('click', () => getGif());
+      async function getGif() {
         const searchValue = searchbar.value;
         if (searchValue)
-          fetch(
-            `https://api.giphy.com/v1/gifs/translate?api_key=1gSQrNXOimiaONNQ71dwp47ND3bNRyo3&s=${searchValue}`,
-          )
-            .then(function (response) {
-              return response.json();
-            })
-            .then(function (response) {
-              img.src = response.data.images.original.url;
-            })
-            .catch(function (e) {
-              console.log(e);
-            });
-      });
+          try {
+            const response = await fetch(
+              `https://api.giphy.com/v1/gifs/translate?api_key=1gSQrNXOimiaONNQ71dwp47ND3bNRyo3&s=${searchValue}`,
+            );
+            const gifData = await response.json();
+            img.src = gifData.data.images.original.url;
+          } catch (e) {
+            console.log(e);
+          }
+      }
     </script>
   </body>
 </html>
